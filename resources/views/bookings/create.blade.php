@@ -5,12 +5,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Add Book</h1>
+                <h1 class="m-0">Add Booking</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('book') }}">Books</a></li>
-                    <li class="breadcrumb-item active">Add Book</li>
+                    <li class="breadcrumb-item"><a href="{{ url('book') }}">Bookings</a></li>
+                    <li class="breadcrumb-item active">Add Booking</li>
                 </ol>
             </div>
         </div>
@@ -23,30 +23,32 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('book.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('bookings.store') }}" method="POST" enctype="multipart/form-data" id="form">
                             @csrf
-                            <div class="form-group">
-                                <label for="image">Poster</label>
-                                <input type="file" class="form-control" id="image" name="image">
-                                <div class="error" style="color: red;"> </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title">
-                                <div class="error" style="color: red;"> </div>
-                            </div>
                             <div class="form-group" style="display: flex; justify-content: space-between">
                                 <div style="width: 100%; padding-right: 5px"> 
-                                    <label for="author">Author</label>
-                                    <input type="text" class="form-control" id="author" name="author" placeholder="Enter Author">
+                                    <label for="class">Class</label>
+                                    <input type="text" class="form-control" id="class" name="class" placeholder="Enter Class' Level">
                                     <div class="error" style="color: red;"> </div>
                                 </div>
                                 
                                 <div style="width: 100%">
-                                    <label for="pages">Pages</label>
-                                    <input type="text" class="form-control" id="pages" name="pages" placeholder="Enter Pages">
+                                    <label for="price">Price</label>
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price">
                                     <div class="error" style="color: red;"> </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_book">Book</label>
+                                <select id="id_book" name="id_book">
+                                    <option value="" disabled selected>Select a Book</option>
+                                    @forelse ($book as $item)
+                                        <option value="{{$item->id }}">{{$item->title }}</option>
+                                    @empty
+                                        <option value="">No Books Available</option>
+                                    @endforelse
+                                </select>
+                                <div class="error" style="color: red;"> </div>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-success">SAVE</button>
@@ -60,11 +62,10 @@
 </div>
 
 <script>
-    const form = document.querySelector('form');
-    const titleInput = document.getElementById('title');
-    const authorInput = document.getElementById('author');
-    const pagesInput = document.getElementById('pages');
-    const imageInput = document.getElementById('image');
+    const form = document.getElementById('form');
+    const classInput = document.getElementById('class');
+    const priceInput = document.getElementById('price');
+    const idBookInput = document.getElementById('id_book');
 
     form.addEventListener('submit', e => {
         const isValid = validateInputs();
@@ -72,7 +73,7 @@
         if (!isValid) {
             e.preventDefault();
         }
-     });
+    });
 
     const setError = (element, message) => {
         const inputControl = element.parentElement;
@@ -93,39 +94,31 @@
     };
 
     const validateInputs = () => {
-        const titleValue = titleInput.value.trim();
-        const authorValue = authorInput.value.trim();
-        const pagesValue = pagesInput.value.trim();
-        const imageValue = imageInput.value.trim();
+        const classValue = classInput.value.trim();
+        const priceValue = priceInput.value.trim();
+        const idBookValue = idBookInput.value.trim();
 
         let isValid = true;
 
-        if (titleValue === '') {
-            setError(titleInput, '! Title Cannot Be Empty');
+        if (classValue === '') {
+            setError(classInput, '! Class Cannot Be Empty');
             isValid = false;
         } else {
-            setSuccess(titleInput);
+            setSuccess(classInput);
         }
 
-        if (authorValue === '') {
-            setError(authorInput, '! Author Cannot Be Empty');
+        if (priceValue === '') {
+            setError(priceInput, '! Price Cannot Be Empty');
             isValid = false;
         } else {
-            setSuccess(authorInput);
+            setSuccess(priceInput);
         }
 
-        if (pagesValue === '') {
-            setError(pagesInput, '! Pages Cannot Be Empty');
+        if (idBookValue === '') {
+            setError(idBookInput, '! Book Cannot Be Empty');
             isValid = false;
         } else {
-            setSuccess(pagesInput);
-        }
-
-        if (imageValue === '') {
-            setError(imageInput, '! Image Cannot Be Empty');
-            isValid = false;
-        } else {
-            setSuccess(imageInput);
+            setSuccess(idBookInput);
         }
 
         return isValid;

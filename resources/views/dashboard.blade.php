@@ -52,7 +52,7 @@
                 <img src=" {{ asset('img/AdminLTELogo.png') }}" 
                     alt="AdminLTE Logo" class="brand-image img-circle elevation3"
                     style="opacity: .8"> 
-                <span class="brand-text font-weight-light">Perpus gacor</span> 
+                <span class="brand-text font-weight-light">Perpus Gacor</span> 
             </a>
 
             <!-- Sidebar --> 
@@ -65,7 +65,7 @@
                             <a href="{{ url('book') }}" 
                                 class="nav-link"> 
                                 <i class="fa-solid fa-film"></i> 
-                                <p> Book</p> 
+                                <p> Books </p> 
                             </a> 
                         </li>
 
@@ -73,7 +73,7 @@
                             <a href="{{ url('bookings') }}" 
                                 class="nav-link"> 
                                 <i class="fa-solid fa-ticket"></i> 
-                                <p> Bookings</p>
+                                <p> Bookings </p>
                             </a> 
                         </li> 
                     </ul> 
