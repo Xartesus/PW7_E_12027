@@ -97,7 +97,8 @@ class BookController extends Controller
 
     public function destroy($id) 
     { 
-        $book = Book::find($id); 
+        $book = Book::find($id);
+        File::delete(public_path($book->image));
         $book->delete(); 
         return redirect()->route('book.index')->with(['success' => 'Data Deleted Successfully!']); 
     }
